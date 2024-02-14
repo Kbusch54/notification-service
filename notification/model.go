@@ -42,14 +42,15 @@ func (s *Notification) GetID() any {
 
 func (s *Notification) toResponse() *NotificationResponse {
 	return &NotificationResponse{
-		Name:        s.Name,
-		Symbol:      s.Symbol,
-		Price:       s.PriceToWatch,
-		Time:        s.CreatedAt.String(),
-		Methods:     s.Method,
-		GreaterThan: s.GreaterThan,
-		NotifiedAt:  s.NotifiedAt.String(),
-		Notified:    s.Notified,
+		Name:         s.Name,
+		Symbol:       s.Symbol,
+		CurrentPrice: 0,
+		TargetPrice:  s.PriceToWatch,
+		Time:         s.CreatedAt.String(),
+		Methods:      s.Method,
+		GreaterThan:  s.GreaterThan,
+		NotifiedAt:   s.NotifiedAt.String(),
+		Notified:     s.Notified,
 	}
 }
 
