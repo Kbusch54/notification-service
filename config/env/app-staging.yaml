@@ -1,0 +1,20 @@
+app: invest-scraping
+
+stream:
+  kafka:
+    brokers: localhost:9092
+persistence:
+  mongodb:
+    url: mongodb://localhost:27017/
+    database: invest-stocks
+
+
+services: 
+    brevo:
+      host: smtp-relay.brevo.com
+      port: 587
+      email: ""
+      apikey: ""
+server:
+  port: 7000
+  host: localhost

@@ -1,0 +1,18 @@
+app: invest-scraping
+
+stream:
+  kafka:
+    brokers: localhost:9092
+persistence:
+  mongodb:
+    url: mongodb://localhost:27017/
+    database: invest-stocks
+services: 
+    brevo:
+      host: smtp-relay.brevo.com
+      port: 587
+      email: "investing.go.company@gmail.com"
+      apikey: "xsmtpsib-2eea9f27e2a601557a2d013d03668bfd471acf828769f73d4af6a3f46af89c0c-38p0LUfASymrIDh4"
+server:
+  port: 7000
+  host: localhost
