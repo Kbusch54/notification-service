@@ -19,21 +19,24 @@ type ServiceDefaultImpl struct {
 	from     string
 	smptHost string
 	smptPort int
+	siteHost string
 	log      logg.Logger
 }
 
-func NewNotificationService(cfg *config.Services) Service {
+func NewNotificationService(cfg *config.Config) Service {
 	log := logg.NewDefaultLog()
-	key := cfg.Brevo.APIKey
-	from := cfg.Brevo.Email
-	smptHost := cfg.Brevo.Host
-	smptPort := cfg.Brevo.Port
+	key := cfg.Services.Brevo.APIKey
+	from := cfg.Services.Brevo.Email
+	smptHost := cfg.Services.Brevo.Host
+	smptPort := cfg.Services.Brevo.Port
+	sietHost := cfg.Server.Host
 	return &ServiceDefaultImpl{
 		log:      log,
 		key:      key,
 		from:     from,
 		smptHost: smptHost,
 		smptPort: smptPort,
+		siteHost: sietHost,
 	}
 }
 
@@ -41,12 +44,11 @@ func (s *ServiceDefaultImpl) SendPriceAlertEmail(notification notification.Notif
 	msg := gomail.NewMessage()
 	msg.SetHeader("From", s.from)
 	msg.SetHeader("To", notification.MethodValue.Email)
-	msg.SetHeader("Subject", "Alert!")
+	msg.SetHeader("Subject", "Price Alert!")
 	priceToWatch := notification.TargetPrice
 	currentPrice := notification.CurrentPrice
 	symbol := notification.Symbol
-	host := "http://localhost:8080"
-	msg.SetBody("text/html", fmt.Sprintf("<b>Alert</b> <br><p> This is a test email </p>Price alert for %s <br> Current Price: $%.2f <br> Target Price: $%.2f <br><a href='%s/myinvestments'>View My Investments</a>", symbol, currentPrice, priceToWatch, host))
+	msg.SetBody("text/html", fmt.Sprintf("<b>Alert</b> <br><p> This is a test email </p>Price alert for %s <br> Current Price: $%.2f <br> Target Price: $%.2f <br><a href='%s/myinvestments'>View My Investments</a>", symbol, currentPrice, priceToWatch, s.siteHost))
 	dialer := gomail.NewDialer(s.smptHost, s.smptPort, s.from, s.key)
 	dialer.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 	if err := dialer.DialAndSend(msg); err != nil {

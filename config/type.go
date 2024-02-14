@@ -26,6 +26,7 @@ type InvestingServices struct {
 
 type Server struct {
 	Port string `mapstructure:"port"`
+	Host string `mapstructure:"host"`
 }
 type Stream struct {
 	Kafka Kafka `mapstructure:"kafka"`
