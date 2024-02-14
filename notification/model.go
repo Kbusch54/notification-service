@@ -61,7 +61,7 @@ func (s *Notification) toResponse() *NotificationResponse {
 // 	}
 // }
 
-func (s *Notification) NewNotification(name, symbol, userId, notiType, method string, price float64, greaterThan bool) *Notification {
+func (s *Notification) NewNotification(name, symbol, userId, notiType string, methods []string, price float64, greaterThan bool) *Notification {
 	return &Notification{
 		ID:           primitive.NewObjectID(),
 		Name:         name,
@@ -69,7 +69,7 @@ func (s *Notification) NewNotification(name, symbol, userId, notiType, method st
 		NotiType:     notiType,
 		Symbol:       symbol,
 		PriceToWatch: price,
-		Method:       []string{method},
+		Method:       methods,
 		GreaterThan:  greaterThan,
 		CreatedAt:    time.Now(),
 		NotifiedAt:   time.Time{},
